@@ -36,7 +36,7 @@ final requestQueryProvider =
 
 typedef _$RequestQuery = AutoDisposeNotifier<String>;
 String _$artworksAPIServiceHash() =>
-    r'e4025ef1c9d776bd4a5a98b3fbeb3724d99fa034';
+    r'e8410e616a43773f2fa0196fef9b386376c4dfb8';
 
 /// See also [ArtworksAPIService].
 @ProviderFor(ArtworksAPIService)

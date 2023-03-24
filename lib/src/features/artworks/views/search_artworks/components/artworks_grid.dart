@@ -44,23 +44,23 @@ class ArtworksGrid extends HookConsumerWidget {
     final controller = useScrollController();
     // Initialize offset at 20, since artworks are pre-loaded
     final offset = useState(20);
-    useEffect(
-      () {
-        controller.addListener(
-          () {
-            if (controller.position.pixels ==
-                controller.position.maxScrollExtent) {
-              ref
-                  .read(artworksAPIServiceProvider.notifier)
-                  .fetchNextArtworks(offset: offset.value);
-              offset.value += 20;
-            }
-          },
-        );
-        return null;
-      },
-      [controller],
-    );
+    // useEffect(
+    //   () {
+    //     controller.addListener(
+    //       () {
+    //         if (controller.position.pixels ==
+    //             controller.position.maxScrollExtent) {
+    //           ref
+    //               .read(artworksAPIServiceProvider.notifier)
+    //               .fetchNextArtworks(offset: offset.value);
+    //           offset.value += 20;
+    //         }
+    //       },
+    //     );
+    //     return null;
+    //   },
+    //   [controller],
+    // );
     return controller;
   }
 }

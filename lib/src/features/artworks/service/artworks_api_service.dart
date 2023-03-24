@@ -32,15 +32,11 @@ class RequestQuery extends _$RequestQuery {
 class ArtworksAPIService extends _$ArtworksAPIService {
   @override
   FutureOr<List<ArtworkData>> build() async {
-    return await _fetchArtworks(existingData: []);
+    return await _fetchArtworks();
   }
 
-  Future<List<ArtworkData>> _fetchArtworks(
-      {required List<ArtworkData> existingData, int offset = 0}) async {
+  Future<List<ArtworkData>> _fetchArtworks() async {
     List<ArtworkData> artworkData = [];
-    if (existingData.isNotEmpty) {
-      artworkData.addAll(existingData);
-    }
     final client = ref.watch(httpClientProvider);
     final query = ref.watch(requestQueryProvider);
     const limit = 20;
@@ -51,7 +47,6 @@ class ArtworksAPIService extends _$ArtworksAPIService {
         'q': query,
         'limit': '$limit',
         'has_image': '1',
-        'skip': '$offset',
       },
     );
     final response = await client.get(uri);
@@ -62,17 +57,5 @@ class ArtworksAPIService extends _$ArtworksAPIService {
       artworkData.addAll(artworkResponse.data!);
     }
     return artworkData;
-  }
-
-  Future<void> fetchNextArtworks({required int offset}) async {
-    state = await AsyncValue.guard(
-      () async {
-        List<ArtworkData> existingData = [];
-        if (state.value != null && state.value!.isNotEmpty) {
-          existingData = state.value!;
-        }
-        return _fetchArtworks(existingData: existingData, offset: offset);
-      },
-    );
   }
 }
